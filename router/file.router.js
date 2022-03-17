@@ -11,8 +11,8 @@ const {
   savePictureInfo,
 } = require("../controller/file.controller");
 
-const { txCOSHandle } = require("../middleware/txcos.middleware");
-const { txCOSSave } = require("../controller/txcos.controller");
+const { txCOSHandle } = require("../middleware/txCOS.middleware");
+const { txCOSSave } = require("../controller/txCOS.controller");
 
 const fileRouter = new Router({ prefix: "/upload" });
 
