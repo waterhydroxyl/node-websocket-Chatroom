@@ -1,4 +1,4 @@
-const connection = require("../app/database");
+const connection = require('../app/database');
 
 class UserService {
   async create(user) {
@@ -9,16 +9,28 @@ class UserService {
     return result[0];
   }
 
-  async getUserByName(name) {
-    const statement = `SELECT * FROM user WHERE name = ?;`;
-    const result = await connection.execute(statement, [name]);
+  async getUserByName(name, cellphone, status) {
+    const statement = `SELECT * FROM user WHERE WHERE name LIKE '%(?)%' AND cellphone LIKE '%?%' AND status LIKE'%?';`;
+    const result = await connection.execute(statement, [name, cellphone, status]);
 
+    return result[0];
+  }
+
+  async getUserList() {
+    const statement = `SELECT * FROM user;`;
+    const result = await connection.execute(statement);
     return result[0];
   }
 
   async updateAvatarUrlById(avatarUrl, userId) {
     const statement = `UPDATE user SET avatar_url = ? WHERE id = ?;`;
     const [result] = await connection.execute(statement, [avatarUrl, userId]);
+    return result;
+  }
+
+  async updateBan(ban, userid) {
+    const statement = `UPDATE user SET ban = ? WHERE id = ?;`;
+    const [result] = await connection.execute(statement, [ban, userid]);
     return result;
   }
 }

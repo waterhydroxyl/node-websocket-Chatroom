@@ -1,10 +1,17 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const userService = require("../service/user.service");
-const fileService = require("../service/file.service");
-const { AVATAR_PATH } = require("../constants/file-path");
+const userService = require('../service/user.service');
+const fileService = require('../service/file.service');
+const { AVATAR_PATH } = require('../constants/file-path');
 
 class UserController {
+  async updateBan(ctx, next) {
+    const user = ctx.user;
+    const { ban } = ctx.request.body;
+    const result = await userService.updateBan(ban, user.id);
+    ctx.body = result;
+  }
+
   async create(ctx, next) {
     // 获取用户请求传递的参数
     const user = ctx.request.body;
@@ -14,6 +21,13 @@ class UserController {
 
     // 返回数据
     console.log(ctx);
+    ctx.body = result;
+  }
+
+  async userList(ctx, next) {
+    const { name, cellphone, status } = ctx.request.body;
+    const result = await userService.getUserList(name, cellphone, status);
+    console.log('userList', result);
     ctx.body = result;
   }
 
@@ -28,7 +42,7 @@ class UserController {
         avatarUrl: userInfo.avatar_url,
       };
     } else {
-      ctx.body = "NOT_FOUND";
+      ctx.body = 'NOT_FOUND';
     }
   }
 }

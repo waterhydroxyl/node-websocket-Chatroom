@@ -5,7 +5,7 @@ const md5password = require("../utils/password-handle");
 const verifyUser = async (socket, next) => {
   // 1.获取用户名和密码
   const { name, password } = socket.handshake.query;
-  console.log(name, password + "io.middleware,verifyUser");
+  // console.log(name, password + "io.middleware,verifyUser");
 
   // 2.判断用户名和密码是否为空 前端来判断
   // if (!name || !password) {
@@ -23,9 +23,9 @@ const verifyUser = async (socket, next) => {
     console.log("用户不存在");
     return next(error);
   }
-  console.log("不会来到这里吧？");
+  // console.log("不会来到这里吧？");
   // 4.判断密码是否和数据库中的密码是一致(加密)
-  console.log(password, "user.password");
+  // console.log(password, "user.password");
   if (md5password(password) !== user.password) {
     const error = new Error(errorTypes.PASSWORD_IS_INCORRENT);
     return next(error);
