@@ -25,9 +25,10 @@ class UserController {
   }
 
   async userList(ctx, next) {
-    const { name, cellphone, status } = ctx.request.body;
-    const result = await userService.getUserList(name, cellphone, status);
-    console.log('userList', result);
+    const { name, cellphone, status, createAtB, createAtE } = ctx.request.query;
+    // console.log(name, cellphone, status);
+    const result = await userService.getUserList(name, cellphone, status, createAtB, createAtE);
+    // console.log('userList', result);
     ctx.body = result;
   }
 

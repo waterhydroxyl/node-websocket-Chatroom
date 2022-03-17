@@ -9,18 +9,25 @@ class UserService {
     return result[0];
   }
 
-  async getUserByName(name, cellphone, status) {
-    const statement = `SELECT * FROM user WHERE WHERE name LIKE '%(?)%' AND cellphone LIKE '%?%' AND status LIKE'%?';`;
-    const result = await connection.execute(statement, [name, cellphone, status]);
-
-    return result[0];
-  }
-
-  async getUserList() {
-    const statement = `SELECT * FROM user;`;
+  async getUserList(name, cellphone, status, createAtB, createAtE) {
+    console.log(createAtB, createAtE);
+    if (!createAtB || !createAtE) {
+      createAtB = '1970-01-01 00:00:00';
+      createAtE = '2099-01-01 00:00:00';
+    }
+    // const statement = `SELECT * FROM user WHERE name LIKE '%?%' AND cellphone LIKE '%?%' AND status LIKE'%?;`;
+    const statement = `SELECT * FROM user WHERE name LIKE '%${name}%' AND cellphone LIKE '%${cellphone}%' AND status LIKE'%${status}' AND (createAt BETWEEN  '${createAtB}' AND '${createAtE}');`;
+    console.log(statement);
     const result = await connection.execute(statement);
+
     return result[0];
   }
+
+  // async getUserList() {
+  //   const statement = `SELECT * FROM user;`;
+  //   const result = await connection.execute(statement);
+  //   return result[0];
+  // }
 
   async updateAvatarUrlById(avatarUrl, userId) {
     const statement = `UPDATE user SET avatar_url = ? WHERE id = ?;`;
