@@ -60,8 +60,8 @@ let util = {
     user.deviceType = deviceType;
     user.roomId = socket.id;
     user.type = 'user';
-    console.log('处理用户登录');
-    console.log(user);
+    // console.log('处理用户登录');
+    // console.log(user);
     if (isReconnect) {
       socket.emit('loginSuccess', user, users);
       this.loginSuccess(socket, user);
@@ -80,8 +80,8 @@ let util = {
   loginSuccess(socket, user) {
     socket.broadcast.emit('system', user, 'join');
     socket.on('message', (from, to, message, type) => {
-      console.log("收到消息准备广播");
-      console.log(from, to, message, type);
+      // console.log("收到消息准备广播");
+      // console.log(from, to, message, type);
       if (to.type === 'user') {
         socket.broadcast.to(to.roomId).emit('message', socket.user, to, message, type);
       }
@@ -93,8 +93,8 @@ let util = {
     });
     socket.user = user;
     users.push(user);
-    console.log('用户登录成功,开始监听消息发送');
-    console.log(users);
+    // console.log('用户登录成功,开始监听消息发送');
+    // console.log(users);
     // store.saveUser(user, 'login');
   },
   //删除储存的用户

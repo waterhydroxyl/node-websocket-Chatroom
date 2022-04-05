@@ -9,6 +9,13 @@ class UserService {
     return result[0];
   }
 
+  async getUserByName(name) {
+    const statement = `SELECT * FROM user WHERE name = ?;`;
+    const result = await connection.execute(statement, [name]);
+
+    return result[0];
+  }
+
   async getUserList(name, cellphone, status, createAtB, createAtE) {
     console.log(createAtB, createAtE);
     if (!createAtB || !createAtE) {
@@ -29,9 +36,17 @@ class UserService {
   //   return result[0];
   // }
 
-  async updateAvatarUrlById(avatarUrl, userId) {
-    const statement = `UPDATE user SET avatar_url = ? WHERE id = ?;`;
-    const [result] = await connection.execute(statement, [avatarUrl, userId]);
+  async updateUserInfoById(name, cellphone, password, userId, status) {
+    console.log(name, cellphone, password, userId, status);
+    // const statement = `UPDATE user SET name = ?,  WHERE id = ?;`;
+    const statement = `UPDATE user SET name = ?, cellphone = ?, password = ? , status = ? WHERE id = ?;`;
+    const [result] = await connection.execute(statement, [
+      name,
+      cellphone,
+      password,
+      status,
+      userId,
+    ]);
     return result;
   }
 

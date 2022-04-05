@@ -12,6 +12,13 @@ class UserController {
     ctx.body = result;
   }
 
+  async updateUser(ctx, next) {
+    const userId = ctx.params.id;
+    const { name, cellphone, password, status } = ctx.request.body;
+    const result = await userService.updateUserInfoById(name, cellphone, password, userId, status);
+    ctx.body = result;
+  }
+
   async create(ctx, next) {
     // 获取用户请求传递的参数
     const user = ctx.request.body;
