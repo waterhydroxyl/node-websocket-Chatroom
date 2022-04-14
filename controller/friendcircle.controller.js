@@ -10,8 +10,18 @@ class CommentController {
 
   async updateLike(ctx, next) {
     const id = ctx.params.id;
-    const result = await service.updateLike(id);
-    ctx.body = result;
+    const { name } = ctx.request.body;
+    console.log(id, name);
+    const result = await service.getFriendCircleListById(id);
+    console.log(result[0].likes.person.length);
+    const position = result[0].likes.person.length;
+
+    try {
+      const result1 = await service.updateLike(position, name, id);
+      ctx.body = result1;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async list(ctx, next) {

@@ -2,14 +2,20 @@ const connection = require('../app/database');
 
 class FriendService {
   async create(name, picUrl, content) {
-    const statement = `INSERT INTO friendCircle (name, picUrl, content) VALUES (?, ?, ?);`;
-    const [result] = await connection.execute(statement, [name, picUrl, content]);
+    const statement = `INSERT INTO friendCircle (name, picUrl, content, likes) VALUES (?, ?, ?, ?);`;
+    const [result] = await connection.execute(statement, [name, picUrl, content, { person: [] }]);
     return result;
   }
 
-  async updateLike(id) {
-    console.log(id);
-    const statement = `UPDATE friendCircle SET like = like + 1 WHERE id = ?;`;
+  async updateLike(position, name, id) {
+    console.log(position, name, id);
+    const statement = `UPDATE friendCircle SET likes = JSON_INSERT(likes, '$.person[${position}]', ?) WHERE id = ?;`;
+    const [result] = await connection.execute(statement, [name, id]);
+    return result;
+  }
+
+  async getFriendCircleListById(id) {
+    const statement = `SELECT * FROM friendCircle WHERE id = ?;`;
     const [result] = await connection.execute(statement, [id]);
     return result;
   }
