@@ -1,13 +1,14 @@
+const jwt = require('jsonwebtoken');
+const { PRIVATE_KEY } = require('../app/config');
 
-
-class OthersController {
+class AuthController {
   async login(ctx, next) {
     const { id, name, status, ban } = ctx.user;
     const token = jwt.sign({ id, name }, PRIVATE_KEY, {
       expiresIn: 60 * 60 * 24,
       algorithm: 'RS256',
     });
-
+    console.log('2222');
     ctx.body = { id, name, status, token, ban };
   }
 
@@ -16,4 +17,4 @@ class OthersController {
   }
 }
 
-module.exports = new OthersController();
+module.exports = new AuthController();

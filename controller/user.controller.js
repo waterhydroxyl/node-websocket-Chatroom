@@ -5,6 +5,24 @@ const fileService = require('../service/file.service');
 const { AVATAR_PATH } = require('../constants/file-path');
 
 class UserController {
+  async countUser(ctx, next) {
+    // const type = 'text';
+    console.log(ctx.params);
+
+    const { type, type2 } = ctx.params;
+
+    // console.log(ctx.request.body);
+    const result = await userService.countUser(type, type2);
+    ctx.body = result;
+  }
+
+  async orderList(ctx, next) {
+    const { limit } = ctx.request.body;
+    // console.log(limit, offset);
+    const result = await userService.orderList(limit);
+    ctx.body = result;
+  }
+
   async updateBan(ctx, next) {
     const user = ctx.user;
     const { ban } = ctx.request.body;
@@ -12,9 +30,15 @@ class UserController {
     ctx.body = result;
   }
 
+  async delectUser(ctx, next) {
+    const name = ctx.params.name;
+    const result = await userService.delectUser(name);
+    ctx.body = result;
+  }
+
   async updateUser(ctx, next) {
     const userId = ctx.params.id;
-    const { name, cellphone, password, status } = ctx.request.body;
+    const { name, cellphone, password, status = 1 } = ctx.request.body;
     const result = await userService.updateUserInfoById(name, cellphone, password, userId, status);
     ctx.body = result;
   }

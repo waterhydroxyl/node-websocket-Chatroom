@@ -1,9 +1,15 @@
 const connection = require('../app/database');
 
 class FriendService {
-  async create(name, picUrl, content) {
-    const statement = `INSERT INTO friendCircle (name, picUrl, content, likes) VALUES (?, ?, ?, ?);`;
-    const [result] = await connection.execute(statement, [name, picUrl, content, { person: [] }]);
+  async create(name, picUrl, content, fileType) {
+    const statement = `INSERT INTO friendCircle (name, picUrl, content, likes,fileType) VALUES (?, ?, ?, ?, ?);`;
+    const [result] = await connection.execute(statement, [
+      name,
+      picUrl,
+      content,
+      { person: [] },
+      fileType,
+    ]);
     return result;
   }
 

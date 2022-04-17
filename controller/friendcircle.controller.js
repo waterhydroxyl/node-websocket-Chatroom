@@ -2,9 +2,9 @@ const service = require('../service/friendcircle.service.js');
 
 class CommentController {
   async create(ctx, next) {
-    const { name, picUrl = 'www', content } = ctx.request.body;
+    const { name, picUrl = 'www', content, fileType } = ctx.request.body;
     console.log(name, picUrl, content);
-    const result = await service.create(name, picUrl, content);
+    const result = await service.create(name, picUrl, content, fileType);
     ctx.body = result;
   }
 
