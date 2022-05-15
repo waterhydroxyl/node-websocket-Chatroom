@@ -14,7 +14,8 @@
         "koa-multer": "^1.0.2",
         "koa-router": "^10.1.1",
         "mysql2": "^2.3.3",
-        "socket.io": "^2.0.1"
+        "socket.io": "^2.0.1",
+        "tencentcloud-sdk-nodejs": "^4.0.339"
     },
     "scripts": {
         "dev": "node app.js",

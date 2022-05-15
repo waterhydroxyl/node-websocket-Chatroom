@@ -58,8 +58,10 @@ class UserService {
 
   async delectUser(name) {
     const statement = `DELETE FROM user WHERE name = ?;`;
+    const statement1 = `DELETE FROM friendCircle WHERE name = ?;`;
     const [result] = await connection.execute(statement, [name]);
-    return result;
+    const [result1] = await connection.execute(statement1, [name]);
+    return [result, result1];
   }
 
   async orderList(limit) {

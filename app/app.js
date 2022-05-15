@@ -15,7 +15,7 @@ app.useRoutes();
 app.on('error', errorHandler);
 
 const store = require('../store');
-const server = require('http').createServer(app.callback());
+const server = require('https').createServer(app.callback());
 const socketIO = require('socket.io');
 
 const io = socketIO(server);

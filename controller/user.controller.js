@@ -5,6 +5,12 @@ const fileService = require('../service/file.service');
 const { AVATAR_PATH } = require('../constants/file-path');
 
 class UserController {
+  async userInfo(ctx, next) {
+    const { name } = ctx.params;
+    const user = await userService.getUserByName(name);
+    ctx.body = user;
+  }
+
   async countUser(ctx, next) {
     // const type = 'text';
     console.log(ctx.params);
